@@ -1,12 +1,25 @@
-# real-world-vue
-This follows on from the Vue Mastery Introduction and covers Vue Router, Single File Components and API calls.
+# Mastering Vuex (State Management)
+This follows on from the Vue Mastery Real World Vue course.
 
-The app takes data from a db.json file (in root directory of project) and, using a little JSON server to mock up the API server.
-JSON Server will take a JSON file from your main project folder and turn it into a RESTful database with all the right routes; it can even do things like search queries.
-You will need it installed on your machine:
-npm install -g json-server
+Managing state in an application full of components by emitting events from child to parent components, and passing down props from parent to children components means that state management would quickly become very complicated.
 
-To spin up this little API server, run: json-server --watch db.json
+Vuex is Vue’s own state management pattern and library.
+A Single Source of Truth is what Vuex provides, and every component has direct access to this global State.
+
+Just like the Vue instance’s data, this State is reactive. When one component updates the State, other components that are using that data get notified, automatically receiving the new value.
+
+const app = new Vue({
+	data: {},    --> reactive
+	methods: {},
+	computed: {}
+})
+
+const store = new Vuex.Store({
+    state: {},     --> reactive
+    mutations: {}, --> makes and tracks state changes
+    actions: {},   --> like methods, use to commit Mutations to update state
+    getters: {}    --> like computed,accesses filtered/derived state
+})
 
 ## Project setup
 ```

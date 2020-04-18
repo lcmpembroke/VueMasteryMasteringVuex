@@ -39,13 +39,6 @@ export default {
     }
   },
   created() {
-    console.log('in EventShow created()...', this.id)
-    if (this.id == 'create') {
-      console.log(
-        'ROUTING PROBLEM AS id of create.....shouldve gone to EventCreate'
-      )
-    }
-
     EventService.getEvent(this.id)
       .then(response => {
         this.event = response.data

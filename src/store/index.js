@@ -19,12 +19,7 @@ export default new Vuex.Store({
       'food',
       'community'
     ],
-    events: [
-      { id: 1, title: '...', organizer: '...' },
-      { id: 2, title: '...', organizer: '...' },
-      { id: 3, title: '...', organizer: '...' },
-      { id: 4, title: '...', organizer: '...' }
-    ],
+    events: [],
     todos: [
       { id: 1, text: '...', done: true },
       { id: 2, text: '...', done: false },
@@ -35,15 +30,32 @@ export default new Vuex.Store({
   mutations: {
     ADD_EVENT(state, event) {
       state.events.push(event)
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
     }
   },
   actions: {
+    //  { commit  } is the context object, event is the payload
     createEvent({ commit }, event) {
       // update database
       return EventService.postEvent(event).then(() => {
         // commit to state as post to database was successful
         commit('ADD_EVENT', event)
       })
+    },
+    // { commit  } is the context object
+    fetchEvents({ commit }) {
+      EventService.getEvents()
+        .then(response => {
+          // response.data is the payload (payload = actual data interested in )
+          commit('SET_EVENTS', response.data)
+        })
+        .catch(error => {
+          console.log('error from EventList')
+          console.log(this)
+          console.log('Error is: ' + error.response)
+        })
     }
   },
   getters: {

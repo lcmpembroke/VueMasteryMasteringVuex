@@ -12,27 +12,17 @@
 
 <script>
 import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService.js'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     EventCard
   },
-  data() {
-    return {
-      events: []
-    }
-  },
   created() {
-    EventService.getEvents()
-      .then(response => {
-        this.events = response.data
-      })
-      .catch(error => {
-        console.log('error from EventList')
-        console.log(this)
-        console.log('Error is: ' + error.response)
-      })
-  }
+    // call vuex action from within created lifecycle hook
+    this.$store.dispatch('fetchEvents')
+  },
+  // get access to our state (data being managed) using the mapState helper
+  computed: mapState(['events'])
 }
 </script>
