@@ -10,15 +10,11 @@ const apiClient = axios.create({
 })
 
 export default {
-  getEvents() {
-    console.log('getEvents in EventService')
-    return apiClient.get('/events')
+  getEvents(perPage, page) {
+    // For JSON server API see https://github.com/typicode/json-server#paginate
+    return apiClient.get('/events?_limit=' + perPage + '&_page=' + page)
   },
   getEvent(id) {
-    console.log('getEvent in EventService', id)
-    if (isNaN(id)) {
-      console.log('eventId is NOT a number!!!! error')
-    }
     return apiClient.get('/events/' + id)
   },
   postEvent(event) {

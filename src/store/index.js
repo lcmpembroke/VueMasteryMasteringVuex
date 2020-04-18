@@ -4,6 +4,12 @@ import EventService from '@/services/EventService.js'
 
 Vue.use(Vuex)
 
+// NOTE TERMINOLOGY:
+// Mutations:  super simple functions to make changes to the state
+// Actions:   call one or more mutations, perform additional logic, call APIs
+// we don't 'call' mutations or actions.
+//  --> we commit mutations
+//  --> we dispatch actions
 export default new Vuex.Store({
   state: {
     user: {
@@ -20,6 +26,8 @@ export default new Vuex.Store({
       'community'
     ],
     events: [],
+    event: {},
+    eventsTotal: 0,
     todos: [
       { id: 1, text: '...', done: true },
       { id: 2, text: '...', done: false },
@@ -33,29 +41,48 @@ export default new Vuex.Store({
     },
     SET_EVENTS(state, events) {
       state.events = events
+    },
+    SET_EVENTS_TOTAL(state, eventsTotal) {
+      state.eventsTotal = eventsTotal
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   actions: {
-    //  { commit  } is the context object, event is the payload
     createEvent({ commit }, event) {
       // update database
       return EventService.postEvent(event).then(() => {
-        // commit to state as post to database was successful
-        commit('ADD_EVENT', event)
+        commit('ADD_EVENT', event) // commit to state as post to database was successful
       })
     },
-    // { commit  } is the context object
-    fetchEvents({ commit }) {
-      EventService.getEvents()
+    fetchEvents({ commit }, { perPage, page }) {
+      EventService.getEvents(perPage, page)
         .then(response => {
-          // response.data is the payload (payload = actual data interested in )
           commit('SET_EVENTS', response.data)
+          commit(
+            'SET_EVENTS_TOTAL',
+            parseInt(response.headers['x-total-count'])
+          )
         })
         .catch(error => {
-          console.log('error from EventList')
-          console.log(this)
           console.log('Error is: ' + error.response)
         })
+    },
+    fetchEvent({ commit, getters }, id) {
+      let event = getters.getEventById(id)
+
+      if (event) {
+        commit('SET_EVENT', event)
+      } else {
+        EventService.getEvent(id)
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(error => {
+            console.log('Error is: ' + error.response)
+          })
+      }
     }
   },
   getters: {
