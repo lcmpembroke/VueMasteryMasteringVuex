@@ -36,7 +36,11 @@ export default {
   created() {
     this.$store.dispatch('fetchEvent', this.id)
   },
-  computed: mapState(['event'])
+  // computed: mapState(['event']) change from array to use object
+  // so don't have to change lots of references of event to use module name first after refactoring
+  computed: mapState({
+    event: state => state.event.event
+  })
 }
 </script>
 

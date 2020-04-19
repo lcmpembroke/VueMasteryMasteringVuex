@@ -116,7 +116,7 @@ export default {
   computed: {
     ...mapGetters(['getEventById']),
     ...mapState(['user', 'categories'])
-  },
+  }
   // computed: - different ways of doing the above shown below
   // OPTION 1 using the store directly
   // computed: {
@@ -157,9 +157,6 @@ export default {
   // getEvent() {
   //   return this.$store.getters.getEventById
   // },
-  created() {
-    console.log('in created of EventCreate()')
-  }
 }
 </script>
 
