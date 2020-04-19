@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Create an Event - {{ user.name }}</h1>
+    <h1>Create an Event {{ user.user.name }}</h1>
 
     <form @submit.prevent="createEvent">
       <label>Select a category</label>
@@ -79,9 +79,8 @@ export default {
     }
   },
   methods: {
+    // this method called from submission of form
     createEvent() {
-      // called from submission of form
-      // dispatches action defined as createEvent() in src/store/index.js
       this.$store
         .dispatch('createEvent', this.event)
         .then(() => {
@@ -98,7 +97,7 @@ export default {
         })
     },
     createFreshEventObject() {
-      const user = this.$store.state.user
+      const user = this.$store.state.user.user
       const id = Math.floor(Math.random() * 10000000)
       return {
         id: id,

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import EventService from '@/services/EventService.js'
+// * means all public items will be imported into user namespace
+import * as user from '@/store/modules/user.js'
 
 Vue.use(Vuex)
 
@@ -11,11 +13,10 @@ Vue.use(Vuex)
 //  --> we commit mutations
 //  --> we dispatch actions
 export default new Vuex.Store({
+  modules: {
+    user
+  },
   state: {
-    user: {
-      id: 'abc123',
-      name: 'Adam Jahr'
-    },
     categories: [
       'sustainability',
       'nature',
@@ -107,6 +108,5 @@ export default new Vuex.Store({
     getEventById: state => id => {
       return state.events.find(event => event.id === id)
     }
-  },
-  modules: {}
+  }
 })

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Events Listing</h1>
+    <!-- user.user.name relates to  moduleName.stateNameInsideModule.ItemName -->
+    <h1>Events List for {{ user.user.name }}</h1>
     <EventCard
       v-for="event in events"
       :key="event.id"
@@ -50,7 +51,7 @@ export default {
     hasNextPage() {
       return this.page * this.eventsPerPage < this.eventsTotal
     },
-    ...mapState(['events', 'eventsTotal'])
+    ...mapState(['events', 'eventsTotal', 'user'])
   }
 }
 </script>
