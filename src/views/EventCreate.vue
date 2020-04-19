@@ -46,17 +46,6 @@
       </div>
       <input type="submit" class="button -fill-gradient" value="Submit" />
     </form>
-
-    <hr />
-    <p>------------ This event was created by {{ user.id }}</p>
-
-    <p>{{ getEventById(2) }}</p>
-    <p>There are {{ categories.length }} categories</p>
-    <ul>
-      <li v-for="category in categories" :key="category">
-        {{ category }}
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -79,22 +68,17 @@ export default {
     }
   },
   methods: {
-    // this method called from submission of form
     createEvent() {
       this.$store
-        .dispatch('createEvent', this.event)
+        .dispatch('event/createEvent', this.event)
         .then(() => {
-          // show the user the event just created
           this.$router.push({
             name: 'event-show',
             params: { id: this.event.id }
           })
-          // clear out event object if event successfully added to database
           this.event = this.createFreshEventObject()
         })
-        .catch(() => {
-          console.log('Problem creating event: ' + event.title)
-        })
+        .catch(() => {})
     },
     createFreshEventObject() {
       const user = this.$store.state.user.user
@@ -114,7 +98,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getEventById']),
+    ...mapGetters(['event/event']),
     ...mapState(['user', 'categories'])
   }
   // computed: - different ways of doing the above shown below

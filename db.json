@@ -231,6 +231,60 @@
       "date": "",
       "time": "5:00",
       "attendees": []
+    },
+    {
+      "id": 8027233,
+      "user": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "title": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "description": "",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "category": "",
+      "attendees": []
+    },
+    {
+      "id": 7073286,
+      "user": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "title": "",
+      "date": "",
+      "time": "",
+      "location": "",
+      "description": "",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "category": "animal welfare",
+      "attendees": []
+    },
+    {
+      "id": 8229600,
+      "user": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "title": "SUCCESS",
+      "date": "",
+      "time": "",
+      "location": "",
+      "description": "",
+      "organizer": {
+        "id": "abc123",
+        "name": "Adam"
+      },
+      "category": "education",
+      "attendees": []
     }
   ]
 }

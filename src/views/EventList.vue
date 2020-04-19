@@ -38,7 +38,7 @@ export default {
     this.eventsPerPage = 3
 
     // call vuex action from within created lifecycle hook
-    this.$store.dispatch('fetchEvents', {
+    this.$store.dispatch('event/fetchEvents', {
       perPage: this.eventsPerPage,
       page: this.page
     })

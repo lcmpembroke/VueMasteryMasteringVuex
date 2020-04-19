@@ -1,5 +1,7 @@
 import EventService from '@/services/EventService.js'
 
+export const namespaced = true
+
 export const state = {
   events: [],
   event: {},
@@ -28,23 +30,44 @@ export const mutations = {
 }
 
 export const actions = {
-  createEvent({ commit }, event) {
-    // update database
-    return EventService.postEvent(event).then(() => {
-      commit('ADD_EVENT', event) // commit to state as post to database was successful
-    })
+  createEvent({ commit, dispatch }, event) {
+    //console.log('User creating event is ' + rootState.user.user.name)
+    return EventService.postEvent(event)
+      .then(() => {
+        commit('ADD_EVENT', event)
+        const notification = {
+          type: 'success',
+          message: 'Your event has been created'
+        }
+        dispatch('notification/add', notification, { root: true })
+      })
+      .catch(error => {
+        const notification = {
+          type: 'error',
+          message: 'There was a problem creating an event ' + error.message
+        }
+        dispatch('notification/add', notification, { root: true })
+        throw error
+      })
   },
-  fetchEvents({ commit }, { perPage, page }) {
+  fetchEvents({ commit, dispatch }, { perPage, page }) {
     EventService.getEvents(perPage, page)
       .then(response => {
         commit('SET_EVENTS', response.data)
         commit('SET_EVENTS_TOTAL', parseInt(response.headers['x-total-count']))
       })
       .catch(error => {
-        console.log('Error is: ' + error.response)
+        const notification = {
+          type: 'error',
+          message: 'There was a problem fetching events ' + error.message
+        }
+        // passing in root:true is important. It allows the
+        // dispatcher to go up to the root state, down to notification module
+        // and then to the add action within the module
+        dispatch('notification/add', notification, { root: true })
       })
   },
-  fetchEvent({ commit, getters }, id) {
+  fetchEvent({ commit, getters, dispatch }, id) {
     let event = getters.getEventById(id)
 
     if (event) {
@@ -55,7 +78,11 @@ export const actions = {
           commit('SET_EVENT', response.data)
         })
         .catch(error => {
-          console.log('Error is: ' + error.response)
+          const notification = {
+            type: 'error',
+            message: 'There was a problem fetching event ' + error.message
+          }
+          dispatch('notification/add', notification, { root: true })
         })
     }
   }

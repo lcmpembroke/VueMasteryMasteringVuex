@@ -29,18 +29,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: ['id'],
   created() {
-    this.$store.dispatch('fetchEvent', this.id)
+    //this.$store.dispatch('event/fetchEvent', this.id)
+    // now, fetchEvent has been mapped - see mapActions in methods
+    this.fetchEvent(this.id)
   },
   // computed: mapState(['event']) change from array to use object
   // so don't have to change lots of references of event to use module name first after refactoring
   computed: mapState({
     event: state => state.event.event
-  })
+  }),
+  // mapActions() helper takes NameSpace, then array of Actions to map
+  //methods: mapActions(['event/fetchEvent'])...alternative syntax below is using more than one action:
+  methods: mapActions('event', ['fetchEvent'])
 }
 </script>
 
