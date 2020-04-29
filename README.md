@@ -1,32 +1,20 @@
-# Mastering Vuex (State Management)
-This follows on from the Vue Mastery Real World Vue course.
-Note, pagination included here (using the json server's _page and _limit)
+# Next Level Vue
+VueMatery course with prerequisites that include knowledge of:
+Vue CLI
+Vue Router
+Single File .vue Components
+API Calls with Axios
+Vuex  
 
-Managing state in an application full of components by emitting events from child to parent components, and passing down props from parent to children components means that state management would quickly become very complicated.
+A a progress bar (npm install nprogress) is added for a better user experience  
+Solution one - Progress Bar using Axios Interceptors (like middleware to run code when a request is made or response received)
+ - but not optimal for multiple API calls at same time  
+ - templates get rendered before the API call is returned, see empty page with no data initially
 
-Vuex is Vue’s own state management pattern and library.
-A Single Source of Truth is what Vuex provides, and every component has direct access to this global State.
+ Solution two -  in-component route guards, not final solution  
+ This ensures the template is only rendered once fetching the data is done
 
-Just like the Vue instance’s data, this State is reactive. When one component updates the State, other components that are using that data get notified, automatically receiving the new value.
-
-const app = new Vue({  
-	data: {},    --> reactive  
-	methods: {},  
-	computed: {}  
-})  
-
-const store = new Vuex.Store({  
-    state: {},     --> reactive  
-    mutations: {}, --> makes and tracks state changes  
-    actions: {},   --> like methods, use to commit Mutations to update state  
-    getters: {}    --> like computed,accesses filtered/derived state  
-})  
-
-Component - dispatches an action (defined in Vuex store eg fetchEvents)  
-Vuex action   
-    - calls API (EventService) to retrieve data  
-    - commits a Mutation (defined in Vuex store eg SET_EVENTS which sets state in Vuex store i.e. saves the data  
-Component - uses the state that's got the data vua the Vuex action & mutation  
+ Solution three - 
 
 ## Project setup
 ```
@@ -40,7 +28,10 @@ yarn serve
 
 ### Start json server to mock up the API server
 ```
-json-server --watch db.json
+json-server --watch db.json  
+
+use  
+json-server -d 1500 db.json to add a 1.5 second delay betfore returning data
 ```
 ### Compiles and minifies for production
 ```
